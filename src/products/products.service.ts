@@ -25,9 +25,12 @@ export class ProductsService {
     if (filter) {
       const filters = JSON.parse(filter);
       if (filters.name) where.name = Like(`%${filters.name}%`);
-      if (filters.minPrice && filters.maxPrice)
+      if (filters.minPrice && filters.maxPrice) {
         where.price = Between(filters.minPrice, filters.maxPrice);
-      if (filters.categoryId) where.category_id = filters.categoryId;
+      }
+      if (filters.categoryId) {
+        where.category = { id: filters.categoryId };
+      }
     }
 
     const order: any = {};
@@ -40,6 +43,7 @@ export class ProductsService {
       order,
       skip,
       take: limit,
+      relations: ['category'],
     });
 
     return { data, total };

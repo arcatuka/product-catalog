@@ -25,7 +25,6 @@ export class Product {
   image_url: string;
 
   @ManyToOne(() => Category, (category) => category.products)
-  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
